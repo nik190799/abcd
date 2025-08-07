@@ -2,403 +2,361 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>WhatsApp-like Chat Mockup</title>
+  <title>WhatsApp-style Chat UI Mockup</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', 'Inter', sans-serif;
-    }
-    .scrollbar-thin::-webkit-scrollbar {
-      width: 6px;
-      background: transparent;
-    }
-    .scrollbar-thin::-webkit-scrollbar-thumb {
-      background: #b2dfdb;
-      border-radius: 2px;
-    }
+    body { font-family: 'Inter', sans-serif; }
+    /* mimic WhatsApp */
+    .bg-wa-green { background-color: #075e54; }
+    .bg-wa-green-light { background-color: #25d366; }
+    .bg-wa-chat-bg { background-color: #ece5dd; }
+    .bg-wa-chat-user { background-color: #dcf8c6; }
+    .bg-wa-unread { background-color: #25d366; }
+    .wa-scrollbar::-webkit-scrollbar { width: 6px; }
+    .wa-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+    .wa-scrollbar { scrollbar-width: thin; scrollbar-color: #d1d5db #fff; }
+    /* End mimic */
   </style>
 </head>
-<body class="bg-emerald-100">
-  <div class="min-h-screen flex flex-col">
-    <!-- Top Bar -->
-    <header class="bg-emerald-800 text-white flex items-center justify-between px-6 py-4 shadow">
-      <div class="flex items-center gap-3">
-        <img src="https://placehold.co/48x48/21d19f/fff?text=JD" alt="Profile" class="w-12 h-12 rounded-full border-2 border-emerald-200">
-        <div>
-          <h1 class="font-bold text-lg">John Doe</h1>
-          <span class="text-emerald-100 text-sm">Hey there! I am using WhatsApp</span>
+<body class="bg-wa-chat-bg text-gray-900 h-screen overflow-hidden">
+  <div class="w-full h-screen flex max-h-screen">
+
+    <!-- Sidebar: Chats and Contacts -->
+    <aside class="flex flex-col w-full sm:w-96 max-w-md min-w-[300px] border-r border-gray-300 bg-white">
+      <!-- Profile, Status, Settings row -->
+      <div class="flex items-center justify-between gap-3 px-4 py-3 bg-wa-green text-white">
+        <div class="flex items-center gap-2">
+          <img src="https://placehold.co/40x40/25d366/FFF?text=AD" alt="Profile" class="w-10 h-10 rounded-full ring-2 ring-wa-green-light object-cover">
+          <div>
+            <span class="block font-semibold text-lg leading-tight">Alex Doe</span>
+            <span class="block text-xs text-wa-green-light">~ Available</span>
+          </div>
         </div>
-      </div>
-      <nav class="flex gap-3 items-center">
-        <button class="p-2 hover:bg-emerald-900/40 rounded-full"><svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-          viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-          d="M15 17h5l-1.405-1.405C18.79 15.21 18 13.7 18 12V7a6 6 0 00-12 0v5c0 1.7-.79 3.21-2.595 3.595L2 17h5m7 0v1a3 3 0 01-6 0v-1m6 0H9"></path></svg>
-        </button>
-        <button class="p-2 hover:bg-emerald-900/40 rounded-full">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-        </button>
-        <!--<Menu>-->
-        <div class="relative group">
-          <button class="p-2 hover:bg-emerald-900/40 rounded-full">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/>
+        <div class="flex items-center gap-2">
+          <!-- Status Stories (your status + stories) -->
+          <button title="My Status" class="relative w-9 h-9 flex items-center justify-center rounded-full hover:bg-wa-green-light/20 transition">
+            <img src="https://placehold.co/28x28/fff/25d366?text=MY" class="w-7 h-7 rounded-full border-2 border-wa-green-light object-cover" alt="Status">
+            <span class="absolute bottom-0 right-0 block w-2 h-2 bg-wa-green-light rounded-full ring-2 ring-white"></span>
+          </button>
+          <!-- Stories icon; click shows status updates (simulated) -->
+          <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-wa-green-light/20 transition" title="Status Updates">
+            <svg class="w-6 h-6 text-wa-green-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" stroke="currentColor"/>
             </svg>
           </button>
-          <div class="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded shadow overflow-hidden z-30">
-            <a href="#" class="block px-4 py-2 hover:bg-emerald-100">Profile</a>
-            <a href="#" class="block px-4 py-2 hover:bg-emerald-100">Settings</a>
-            <a href="#" class="block px-4 py-2 hover:bg-emerald-100">Log Out</a>
+          <!-- Settings menu -->
+          <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-wa-green-light/20 transition" title="Settings">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15A1.65 1.65 0 0 0 21 13.35V10.7A1.65 1.65 0 0 0 19.4 9l-1.2-.7a1.65 1.65 0 0 1-.8-1.37V5.48C16.4 4.67 15.73 4 14.92 4h-2.35c-.8 0-1.47.67-1.47 1.48v1.45c0 .5-.33.96-.8 1.37L6.6 9a1.65 1.65 0 0 0-.6 1.7v2.65c0 .81.66 1.48 1.47 1.48h1.45c.5 0 .96.33 1.37.8l.7 1.2a1.65 1.65 0 0 0 1.7.6l2.65-1.2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Search chat -->
+      <div class="p-3 bg-white border-b border-gray-200">
+        <div class="relative">
+          <input type="text" placeholder="Search chats or contacts"
+            class="w-full rounded-lg bg-gray-100 pl-10 pr-4 py-2 text-sm focus:outline-none ring-wa-green-light focus:ring-2"
+          />
+          <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Status/Stories panel -->
+      <div class="flex flex-row gap-3 px-4 py-2 overflow-x-auto wa-scrollbar snap-x border-b border-gray-100">
+        <div class="flex flex-col items-center snap-start min-w-16">
+          <div class="relative">
+            <img src="https://placehold.co/48x48/25d366/fff?text=AD" alt="My Story" class="w-12 h-12 rounded-full ring-2 ring-wa-green-light object-cover">
+            <span title="Your story" class="absolute bottom-0 right-0 block w-3 h-3 bg-wa-green-light rounded-full ring-2 ring-white"></span>
           </div>
+          <span class="text-xs text-center mt-1 text-gray-800 font-medium">My Story</span>
         </div>
-      </nav>
-    </header>
-    
-    <!-- Status Bar -->
-    <div class="bg-white px-4 border-b border-emerald-200 flex items-center overflow-x-auto py-3 gap-6">
-      <div class="flex flex-col items-center mr-2">
-        <div class="relative group cursor-pointer">
-          <img src="https://placehold.co/56x56/21d19f/fff?text=JD" class="w-14 h-14 rounded-full border-2 border-emerald-400"/>
-          <span class="absolute bottom-0 right-0 bg-emerald-500 w-5 h-5 rounded-full flex justify-center items-center border-2 border-white">
-            <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-          </span>
-        </div>
-        <span class="text-xs mt-1">Your Story</span>
-      </div>
-      <div class="flex flex-col items-center">
-        <div class="relative group cursor-pointer">
-          <img src="https://placehold.co/56x56/607d8b/fff?text=LM" class="w-14 h-14 rounded-full border-2 border-emerald-300"/>
-          <span class="absolute bottom-0 right-1 bg-white w-4 h-4 rounded-full flex justify-center items-center border border-emerald-100"></span>
-        </div>
-        <span class="text-xs mt-1">Lisa</span>
-      </div>
-      <div class="flex flex-col items-center">
-        <div class="relative group cursor-pointer">
-          <img src="https://placehold.co/56x56/fbc02d/fff?text=ME" class="w-14 h-14 rounded-full border-2 border-emerald-300"/>
-          <span class="absolute bottom-0 right-1 bg-white w-4 h-4 rounded-full flex justify-center items-center border border-emerald-100">
-          </span>
-        </div>
-        <span class="text-xs mt-1">Mehul</span>
-      </div>
-      <div class="flex flex-col items-center">
-        <div class="relative group cursor-pointer">
-          <img src="https://placehold.co/56x56/ff876c/fff?text=GS" class="w-14 h-14 rounded-full border-2 border-emerald-300"/>
-          <span class="absolute bottom-0 right-1 bg-white w-4 h-4 rounded-full flex justify-center items-center border border-emerald-100"></span>
-        </div>
-        <span class="text-xs mt-1">Group</span>
-      </div>
-    </div>
-    
-    <!-- Main Chat Layout -->
-    <div class="flex flex-1 min-h-0 divide-x divide-emerald-100 bg-emerald-100">
-      <!-- Left pane: Contact & Chat list -->
-      <aside class="w-full md:w-1/3 lg:w-1/4 flex flex-col bg-white min-w-[16rem] max-w-lg border-r border-emerald-200">
-        <!-- Search -->
-        <div class="px-4 py-3">
-          <div class="flex gap-2 items-center bg-emerald-100 rounded-full px-3 py-2">
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-            <input type="text" placeholder="Search or start new chat"
-              class="bg-transparent flex-1 text-gray-700 placeholder:text-emerald-700 outline-none border-none"/>
+        <div class="flex flex-col items-center snap-start min-w-16">
+          <div class="relative">
+            <img src="https://placehold.co/48x48/FFD700/fff?text=JD" alt="Jenny" class="w-12 h-12 rounded-full ring-2 ring-yellow-400 object-cover">
+            <span title="New" class="absolute bottom-0 right-0 block w-3 h-3 bg-green-400 rounded-full ring-2 ring-white"></span>
           </div>
+          <span class="text-xs text-center mt-1 truncate w-12">Jenny D.</span>
         </div>
-        <!-- New Chat / Group Button -->
-        <div class="px-4 mb-3 flex gap-2">
-          <button class="flex-1 flex items-center gap-2 bg-emerald-200 text-emerald-900 font-semibold px-4 py-2 rounded-full hover:bg-emerald-300 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-              viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-              d="M12 4v16m8-8H4"/></svg>
+        <div class="flex flex-col items-center snap-start min-w-16">
+          <div class="relative">
+            <img src="https://placehold.co/48x48/8A2BE2/fff?text=MM" alt="Mike" class="w-12 h-12 rounded-full ring-2 ring-purple-400 object-cover">
+          </div>
+          <span class="text-xs text-center mt-1 truncate w-12">Mike M.</span>
+        </div>
+        <div class="flex flex-col items-center snap-start min-w-16">
+          <div class="relative">
+            <img src="https://placehold.co/48x48/F08080/fff?text=SG" alt="Sara" class="w-12 h-12 rounded-full ring-2 ring-pink-400 object-cover">
+            <span class="absolute bottom-0 right-0 block w-3 h-3 bg-green-400 rounded-full ring-2 ring-white"></span>
+          </div>
+          <span class="text-xs text-center mt-1 truncate w-12">Sara G.</span>
+        </div>
+      </div>
+
+      <!-- Chat/Contact List -->
+      <div class="flex-1 overflow-y-auto wa-scrollbar bg-white pb-2">
+        <!-- New Chat Button -->
+        <div class="p-3">
+          <button class="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-wa-green-light bg-wa-green/5 hover:bg-wa-green/10 focus:ring-2 focus:ring-wa-green-light transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
             New Chat
           </button>
-          <button class="flex-shrink-0 bg-emerald-100 px-4 py-2 rounded-full hover:bg-emerald-200 transition" title="New Group">
-            <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" stroke-width="2"
-              viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-              d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-7.13A4 4 0 1112 7a4 4 0 016 0zm-6 0a4 4 0 100 8 4 4 0 000-8z"/>
+        </div>
+        <!-- Contact/Chat entry : Active -->
+        <div class="cursor-pointer flex items-center px-4 py-3 bg-wa-green-light/20 hover:bg-wa-green-light/40 transition group border-l-4 border-wa-green-light">
+          <img src="https://placehold.co/48x48/32cd32/fff?text=JD" class="w-12 h-12 rounded-full object-cover mr-3" alt="Jenny">
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold text-gray-900">Jenny Doe</span>
+              <span class="text-xs text-wa-green-light font-semibold">14:21</span>
+            </div>
+            <div class="flex items-center mt-1 gap-1">
+              <span class="font-semibold text-wa-green-light">✔✔</span>
+              <span class="text-gray-700 text-sm truncate flex-1">Photo looks great! See you tonight 👍</span>
+            </div>
+          </div>
+          <span class="ml-3 flex-shrink-0">
+            <span class="inline-flex items-center justify-center text-xs font-bold rounded-full bg-wa-unread text-white w-6 h-6">2</span>
+          </span>
+        </div>
+        <!-- Contact/Chat entry -->
+        <div class="cursor-pointer flex items-center px-4 py-3 hover:bg-gray-100 transition group">
+          <img src="https://placehold.co/48x48/1e90ff/fff?text=MG" class="w-12 h-12 rounded-full object-cover mr-3" alt="Mike">
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold text-gray-900">Mike Group <span class="ml-1 px-2 bg-purple-100 rounded text-xs text-purple-600">Group</span></span>
+              <span class="text-xs text-gray-400">12:45</span>
+            </div>
+            <div class="flex items-center mt-1">
+              <span class="text-gray-700 text-sm truncate flex-1">You: File attached: <span class="text-wa-green-light">presentation.pdf</span></span>
+            </div>
+          </div>
+          <span class="ml-3 flex-shrink-0">
+            <span class="inline-flex items-center justify-center text-xs font-bold rounded-full bg-wa-unread text-white w-6 h-6">1</span>
+          </span>
+        </div>
+        <!-- Contact/Chat entry -->
+        <div class="cursor-pointer flex items-center px-4 py-3 hover:bg-gray-100 transition group">
+          <img src="https://placehold.co/48x48/f08080/fff?text=SG" class="w-12 h-12 rounded-full object-cover mr-3" alt="Sara">
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold text-gray-900">Sara Group <span class="ml-1 px-2 bg-pink-100 rounded text-xs text-pink-600">Group</span></span>
+              <span class="text-xs text-gray-400">09:27</span>
+            </div>
+            <div class="flex items-center mt-1">
+              <span class="text-gray-700 text-sm truncate flex-1">Sara: <span class="font-medium text-wa-green">"See you tomorrow!"</span></span>
+            </div>
+          </div>
+        </div>
+        <!-- Contact/Chat entry -->
+        <div class="cursor-pointer flex items-center px-4 py-3 hover:bg-gray-100 transition group">
+          <img src="https://placehold.co/48x48/8a2be2/fff?text=MM" class="w-12 h-12 rounded-full object-cover mr-3" alt="Matt">
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold text-gray-900">Matt Mendez</span>
+              <span class="text-xs text-gray-400">08:18</span>
+            </div>
+            <div class="flex items-center mt-1">
+              <span class="text-gray-700 text-sm truncate flex-1">Matt: Let's catch up soon!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contacts (at bottom) -->
+      <div class="hidden sm:block bg-white border-t border-gray-200 py-2 px-4">
+        <h3 class="text-xs font-semibold text-gray-400 uppercase mb-2">Contacts</h3>
+        <div class="flex flex-row gap-4 mt-1 mb-2">
+          <img src="https://placehold.co/32x32/FFD700/fff?text=JD" alt="Jenny" class="w-8 h-8 rounded-full ring-2 ring-yellow-300 object-cover">
+          <img src="https://placehold.co/32x32/8A2BE2/fff?text=MM" alt="Mike" class="w-8 h-8 rounded-full ring-2 ring-purple-400 object-cover">
+          <img src="https://placehold.co/32x32/F08080/fff?text=SG" alt="Sara" class="w-8 h-8 rounded-full ring-2 ring-pink-400 object-cover">
+          <img src="https://placehold.co/32x32/1e90ff/fff?text=MG" alt="Matt" class="w-8 h-8 rounded-full ring-2 ring-blue-400 object-cover">
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Main Chat Window -->
+    <section class="flex-1 flex flex-col bg-wa-chat-bg relative">
+      <!-- Chat header -->
+      <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4 bg-white shadow-sm z-10">
+        <div class="flex items-center gap-3">
+          <img src="https://placehold.co/44x44/32cd32/fff?text=JD" class="w-11 h-11 rounded-full object-cover ring-2 ring-wa-green-light" alt="Chat Profile">
+          <div class="">
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-lg text-gray-900">Jenny Doe</span>
+              <span class="inline-flex items-center bg-wa-green-light/10 text-wa-green-light text-xs font-semibold px-2 py-0.5 rounded">Online</span>
+            </div>
+            <span class="block text-xs text-gray-500">last seen today at 14:24</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <!-- Group members (if group) -->
+          <div title="Group members" class="hidden sm:flex -space-x-3">
+            <img src="https://placehold.co/28x28/32cd32/fff?text=JD" class="w-7 h-7 rounded-full border-2 border-white" />
+            <img src="https://placehold.co/28x28/f08080/fff?text=SG" class="w-7 h-7 rounded-full border-2 border-white" />
+            <img src="https://placehold.co/28x28/FFD700/fff?text=JD" class="w-7 h-7 rounded-full border-2 border-white" />
+          </div>
+          <!-- Attach -->
+          <button class="p-2 rounded-full hover:bg-wa-green-light/10 transition" title="Attach">
+            <svg class="w-6 h-6 text-wa-green-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10V5a5 5 0 0 1 10 0v5"/>
+            </svg>
+          </button>
+          <!-- Menu -->
+          <button class="p-2 rounded-full hover:bg-wa-green-light/10 transition" title="More options">
+            <svg class="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+              <circle cx="10" cy="4" r="1.5"></circle>
+              <circle cx="10" cy="10" r="1.5"></circle>
+              <circle cx="10" cy="16" r="1.5"></circle>
             </svg>
           </button>
         </div>
-        
-        <!-- Chat List -->
-        <div class="overflow-y-auto flex-1 divide-y scrollbar-thin">
-          <button class="w-full flex items-center px-4 py-4 hover:bg-emerald-50 transition relative group bg-emerald-50 border-l-4 border-emerald-500">
-            <img src="https://placehold.co/48x48/ff876c/fff?text=GS" class="w-12 h-12 rounded-full mr-3 border border-emerald-200" alt="Group Chat">
-            <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-emerald-800 truncate">Family Group</span>
-                <span class="text-xs text-emerald-600">12:31</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="text-sm text-emerald-700 truncate font-medium">Mehul: Sent the files 📎</span>
-                <span class="inline-flex items-center justify-center min-w-[22px] px-1 py-0.5 bg-emerald-600 text-xs text-white rounded-full font-bold ml-2">2</span>
-              </div>
-            </div>
-          </button>
+      </header>
 
-          <button class="w-full flex items-center px-4 py-4 hover:bg-emerald-50 transition relative group">
-            <img src="https://placehold.co/48x48/607d8b/fff?text=LM" class="w-12 h-12 rounded-full mr-3 border border-emerald-200" alt="Lisa Martin">
-            <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-emerald-800 truncate">Lisa Martin</span>
-                <span class="text-xs text-gray-400 group-hover:text-emerald-500">11:02</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="text-sm text-gray-700 truncate">You: Sure, let's do that! 💡</span>
-              </div>
-            </div>
-          </button>
-
-          <button class="w-full flex items-center px-4 py-4 hover:bg-emerald-50 transition relative group">
-            <img src="https://placehold.co/48x48/fbc02d/fff?text=ME" class="w-12 h-12 rounded-full mr-3 border border-emerald-200" alt="Mehul El">
-            <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-emerald-800 truncate">Mehul Engineer</span>
-                <span class="text-xs text-gray-400 group-hover:text-emerald-500">Fri</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="inline-block text-sm text-gray-700 truncate">Photo <span class="text-gray-400">📷</span></span>
-              </div>
-            </div>
-          </button>
-
-          <button class="w-full flex items-center px-4 py-4 hover:bg-emerald-50 transition relative group">
-            <img src="https://placehold.co/48x48/21d19f/fff?text=JD" class="w-12 h-12 rounded-full mr-3 border border-emerald-200" alt="John Doe">
-            <div class="flex-1 min-w-0">
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-emerald-800 truncate">Jane Doe</span>
-                <span class="text-xs text-gray-400 group-hover:text-emerald-500">Thu</span>
-              </div>
-              <div class="flex justify-between items-center gap-2">
-                <span class="inline-block text-sm text-gray-700 truncate">Audio <span class="text-gray-400">🎤</span></span>
-                <span class="inline-flex items-center justify-center min-w-[22px] px-1 py-0.5 bg-emerald-600 text-xs text-white rounded-full font-bold ml-2">1</span>
-              </div>
-            </div>
-          </button>
+      <!-- Messages area -->
+      <div class="flex-1 overflow-y-auto px-4 py-6 wa-scrollbar" style="background-image:url(https://www.transparenttextures.com/patterns/symphony.png)">
+        <!-- Date divider -->
+        <div class="flex items-center justify-center mb-6">
+          <span class="px-3 py-1 text-xs bg-white text-gray-500 rounded-lg font-semibold shadow">Today</span>
         </div>
-      </aside>
-
-      <!-- Center pane: Chat window -->
-      <main class="flex-1 bg-[url('https://placehold.co/1200x800/ebf5eb/ffffff?text=')] flex flex-col relative min-w-0">
-        <!-- Chat Header -->
-        <div class="px-6 py-4 flex items-center justify-between bg-emerald-900/95 text-white border-b border-emerald-800 sticky top-0 z-10">
-          <div class="flex items-center gap-3">
-            <img src="https://placehold.co/48x48/ff876c/fff?text=GS" class="w-10 h-10 rounded-full border-2 border-emerald-200" alt="Chat Icon">
-            <div>
-              <div class="font-semibold text-lg flex items-center gap-2">Family Group 
-                <span class="ml-2 px-2 py-0.5 text-xs bg-emerald-100/70 text-emerald-900 rounded-full">Group</span>
-              </div>
-              <div class="text-xs text-emerald-200">Mehul, Lisa, You...</div>
+        <!-- Received, message + profile -->
+        <div class="flex items-end space-x-2 mb-4">
+          <img src="https://placehold.co/32x32/32cd32/fff?text=JD" class="w-7 h-7 rounded-full object-cover" alt="Jenny">
+          <div>
+            <span class="text-xs text-gray-500 font-semibold">Jenny</span>
+            <div class="bg-white px-4 py-2 rounded-2xl rounded-bl-none mt-1 shadow-sm max-w-xs md:max-w-md text-gray-800">
+              Hey! 👋 Are you coming to the meetup?
             </div>
-          </div>
-          <div class="flex gap-2 items-center">
-            <button class="p-2 hover:bg-emerald-800/70 rounded-full" title="Video call">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                d="M15 10l4.553-2.276A1 1 0 0121 8.618V15.38a1 1 0 01-1.447.894L15 14m-3 1h.01M5 7a2 2 0 00-2 2v6a2 2 0 002 2h7a2 2 0 002-2V9a2 2 0 00-2-2H5z"/></svg>
-            </button>
-            <button class="p-2 hover:bg-emerald-800/70 rounded-full" title="Voice call">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                d="M7 10V6a5 5 0 0110 0v4"/></svg>
-            </button>
-            <button class="p-2 hover:bg-emerald-800/70 rounded-full" title="More">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="12" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="18" r="1.5"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Messages -->
-        <div class="flex-1 overflow-y-auto px-4 md:px-8 py-6 flex flex-col gap-2 scrollbar-thin" style="background-image: url('https://www.transparenttextures.com/patterns/skulls.png'); background-repeat: repeat;">
-          <!-- Date separator -->
-          <div class="flex justify-center">
-            <span class="px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-semibold shadow">
-              Today
-            </span>
-          </div>
-          <!-- Message from other -->
-          <div class="flex flex-col items-start">
-            <div class="flex items-end gap-2">
-              <img src="https://placehold.co/36x36/fbc02d/fff?text=ME" class="w-9 h-9 rounded-full border border-emerald-200" alt="">
-              <div>
-                <div class="bg-white max-w-xs md:max-w-md shadow px-4 py-2 rounded-2xl rounded-bl-none text-emerald-900 flex flex-col gap-1">
-                  <span>Hey everyone, sharing the photo from yesterday!</span>
-                  <img src="https://placehold.co/160x100/47d1a8/fff?text=Image" class="mt-1 rounded-lg shadow border border-emerald-100" alt="Attachment"/>
-                </div>
-                <div class="flex items-end gap-1 text-emerald-600 text-xs ml-2 mt-1">
-                  <span>12:29</span> 
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                   viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                    d="M5 13l4 4L19 7"/></svg>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- You replied, read by others -->
-          <div class="flex flex-col items-end">
-            <div>
-              <div class="bg-emerald-200 max-w-xs md:max-w-md shadow px-4 py-2 rounded-2xl rounded-br-none text-emerald-900 flex flex-col gap-2">
-                <span>Awesome 📸 !</span>
-                <div class="flex items-center gap-2 mt-1">
-                  <div class="inline-flex bg-emerald-300/70 px-2 py-1 rounded shadow items-center gap-1 text-xs">
-                    <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8M8 16h6"/></svg>
-                    <a href="#" class="underline text-emerald-800">document.pdf</a>
-                  </div>
-                  <span class="text-gray-400">104 KB</span>
-                </div>
-              </div>
-              <div class="flex items-end gap-1 text-emerald-600 text-xs justify-end mt-1">
-                <span>12:30</span> 
-                <!-- double blue tick SVG for 'read' -->
-                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M16.707 9.707a1 1 0 00-1.414-1.414L11 12.586 8.707 10.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l6-6z"></path>
-                  <path d="M20.707 6.707a1 1 0 00-1.414-1.414L11 13.586l-2.293-2.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l9-9z"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <!-- Message from Lisa, with voice note -->
-          <div class="flex flex-col items-start">
-            <div class="flex items-end gap-2">
-              <img src="https://placehold.co/36x36/607d8b/fff?text=LM" class="w-9 h-9 rounded-full border border-emerald-200" alt="">
-              <div>
-                <div class="bg-white max-w-xs md:max-w-md shadow px-4 py-2 rounded-2xl rounded-bl-none text-emerald-900 flex flex-col gap-1">
-                  <span>🎤 <em>0:23 — Tap to listen</em></span>
-                </div>
-                <div class="flex items-end gap-1 text-emerald-600 text-xs ml-2 mt-1">
-                  <span>12:31</span>
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                   viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                    d="M5 13l4 4L19 7"/></svg>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- You send an image (sending...) -->
-          <div class="flex flex-col items-end">
-            <div>
-              <div class="bg-emerald-200 max-w-xs md:max-w-md shadow px-4 py-2 rounded-2xl rounded-br-none text-emerald-900 flex flex-col gap-1">
-                <img src="https://placehold.co/120x80/21d19f/fff?text=Pic" class="mt-1 rounded-lg shadow border border-emerald-100" alt="your image"/>
-              </div>
-              <div class="flex items-end gap-1 text-emerald-600 text-xs justify-end mt-1">
-                <span>12:32</span>
-                <!-- Single gray check for delivered -->
-                <svg class="w-4 h-4 text-emerald-700" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M16.707 9.707a1 1 0 00-1.414-1.414L11 12.586 8.707 10.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l6-6z"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-          <!-- Group chat, name mention -->
-          <div class="flex flex-col items-start">
-            <div class="flex items-end gap-2">
-              <img src="https://placehold.co/36x36/607d8b/fff?text=LM" class="w-9 h-9 rounded-full border border-emerald-200" alt="">
-              <div>
-                <div class="bg-white max-w-xs md:max-w-md shadow px-4 py-2 rounded-2xl rounded-bl-none text-emerald-900">
-                  <span><span class="font-bold text-emerald-700">@John</span> Please check the attachment.</span>
-                </div>
-                <div class="flex items-end gap-1 text-emerald-600 text-xs ml-2 mt-1">
-                  <span>12:34</span> <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-                   viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                    d="M5 13l4 4L19 7"/></svg>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- You reply (file icon) -->
-          <div class="flex flex-col items-end">
-            <div>
-              <div class="bg-emerald-200 max-w-xs md:max-w-md shadow px-4 py-2 rounded-2xl rounded-br-none text-emerald-900 flex flex-col gap-1">
-                <div class="flex items-center gap-2">
-                  <svg class="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8M8 16h6"/></svg>
-                  <a href="#" class="underline text-emerald-800">notes.txt</a>
-                </div>
-                <span class="text-xs text-gray-500">2 KB</span>
-              </div>
-              <div class="flex items-end gap-1 text-emerald-600 text-xs justify-end mt-1">
-                <span>12:34</span>
-                <svg class="w-4 h-4 text-emerald-300" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M16.707 9.707a1 1 0 00-1.414-1.414L11 12.586 8.707 10.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l6-6z"></path>
-                  <path d="M20.707 6.707a1 1 0 00-1.414-1.414L11 13.586l-2.293-2.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l9-9z"></path>
-                </svg>
-              </div>
+            <div class="text-xs text-gray-400 pl-1 mt-1 flex gap-1 items-center">
+              14:20
+              <svg class="w-3 h-3 inline align-middle text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 8.707l-7 7a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414l2.293 2.293 6.293-6.293a1 1 0 111.414 1.414z"></path></svg>
             </div>
           </div>
         </div>
+        <!-- Sent message with delivery status -->
+        <div class="flex justify-end items-end space-x-2 mb-4">
+          <div>
+            <div class="bg-wa-chat-user px-4 py-2 rounded-2xl rounded-br-none shadow-sm max-w-xs md:max-w-md text-gray-900">
+              <span class="block">Yes! I'll be there by <span class="font-semibold text-wa-green">18:00</span> 🎉</span>
+            </div>
+            <div class="text-xs text-gray-400 flex gap-1 items-center justify-end mt-1 pr-1">
+              14:21
+              <span class="text-wa-green-light font-bold">✔✔</span>
+            </div>
+          </div>
+        </div>
+        <!-- Sent message with image -->
+        <div class="flex justify-end items-end space-x-2 mb-4">
+          <div>
+            <div class="bg-wa-chat-user px-2 py-2 rounded-2xl rounded-br-none shadow-sm max-w-xs md:max-w-md text-gray-900">
+              <img src="https://placehold.co/180x110/25d366/FFF?text=IMG" alt="Attachment" class="mb-2 rounded-lg object-cover w-full max-w-[180px]">
+              <span class="block">Photo looks great! See you tonight 👍</span>
+            </div>
+            <div class="text-xs text-gray-400 flex gap-1 items-center justify-end mt-1 pr-1">
+              14:22
+              <span class="text-wa-green-light font-bold">✔✔</span>
+            </div>
+          </div>
+        </div>
+        <!-- Received message with a file attachment -->
+        <div class="flex items-end space-x-2 mb-4">
+          <img src="https://placehold.co/32x32/32cd32/fff?text=JD" class="w-7 h-7 rounded-full object-cover" alt="Jenny">
+          <div>
+            <span class="text-xs text-gray-500 font-semibold">Jenny</span>
+            <div class="bg-white px-4 py-2 rounded-2xl rounded-bl-none mt-1 shadow-sm max-w-xs md:max-w-md">
+              <div class="flex items-center gap-2">
+                <svg class="w-6 h-6 text-wa-green-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13h-4v4"/><path d="M8 13h4v4"/></svg>
+                <div>
+                  <span class="block font-medium text-gray-700">presentation.pdf</span>
+                  <span class="block text-xs text-gray-400">1.7MB • PDF</span>
+                </div>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 pl-1 mt-1 flex gap-1 items-center">
+              14:24
+              <svg class="w-3 h-3 inline align-middle text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 8.707l-7 7a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414l2.293 2.293 6.293-6.293a1 1 0 111.414 1.414z"></path></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Group chat bubble (from group member) -->
+        <div class="flex items-end space-x-2 mb-4">
+          <img src="https://placehold.co/32x32/FFD700/fff?text=JD" class="w-7 h-7 rounded-full object-cover" alt="Jenny">
+          <div>
+            <span class="text-xs text-wa-green font-semibold">Mark (Group)</span>
+            <div class="bg-white px-4 py-2 rounded-2xl rounded-bl-none mt-1 shadow-sm max-w-xs md:max-w-md text-gray-800">
+              Shared a new location <span class="text-wa-green-light">📍</span>
+            </div>
+            <div class="text-xs text-gray-400 pl-1 mt-1 flex gap-1 items-center">
+              13:02
+              <svg class="w-3 h-3 inline align-middle text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 8.707l-7 7a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414l2.293 2.293 6.293-6.293a1 1 0 111.414 1.414z"></path></svg>
+            </div>
+          </div>
+        </div>
+        <!-- Message with voice note -->
+        <div class="flex justify-end items-end space-x-2 mb-4">
+          <div>
+            <div class="bg-wa-chat-user px-4 py-2 rounded-2xl rounded-br-none shadow-sm max-w-xs md:max-w-md flex flex-col items-end">
+              <div class="flex items-center gap-2">
+                <svg class="w-6 h-6 text-wa-green-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3v10"/><circle cx="12" cy="18" r="4"/></svg>
+                <span class="text-xs text-gray-700">Voice Note (0:32)</span>
+              </div>
+            </div>
+            <div class="text-xs text-gray-400 flex gap-1 items-center justify-end mt-1 pr-1">
+              13:41
+              <span class="text-wa-green-light font-bold">✔✔</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <!-- Message input area -->
-        <div class="bg-white p-4 flex items-end gap-2 border-t border-emerald-200">
-          <button class="p-2 rounded-full text-emerald-500 hover:bg-emerald-100" title="Emoji">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 15h8M9 9h.01M15 9h.01"/></svg>
-          </button>
-          <button class="p-2 rounded-full text-emerald-500 hover:bg-emerald-100" title="Attach">
-            <svg class="w-6 h-6 -rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.24 7.76l-7.876 7.876a3 3 0 104.243 4.243l8.486-8.485a4 4 0 00-5.656-5.657L4.93 17.314"/></svg>
-          </button>
-          <input type="text" placeholder="Type a message"
-            class="flex-1 rounded-full bg-emerald-100 px-4 py-2 text-gray-700 border border-emerald-200 outline-none focus:ring-2 focus:ring-emerald-300 transition"/>
-          <button class="p-2 rounded-full text-emerald-500 hover:bg-emerald-100" title="Mic">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10v2a7 7 0 0014 0v-2M12 19v3M8 22h8"/></svg>
-          </button>
-          <button class="p-2 rounded-full text-emerald-600 bg-emerald-200 hover:bg-emerald-400 shadow" title="Send">
-            <svg class="w-7 h-7 rotate-45" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-          </button>
-        </div>
-      </main>
+      <!-- Message Input Bar -->
+      <form class="px-4 py-3 bg-white flex items-center gap-3 border-t border-gray-200">
+        <!-- Emoji -->
+        <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-wa-green-light/10 transition" title="Emoji">
+          <svg class="w-6 h-6 text-wa-green-light" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <path d="M9 9h.01"/>
+            <path d="M15 9h.01"/>
+          </svg>
+        </button>
+        <!-- Attach -->
+        <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-wa-green-light/10 transition" title="Attach">
+          <svg class="w-6 h-6 text-wa-green-light" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10V5a5 5 0 0 1 10 0v5"/>
+          </svg>
+        </button>
+        <!-- Message zone -->
+        <input type="text"
+          class="flex-1 rounded-3xl bg-gray-100 focus:bg-white px-4 py-2 text-base focus:outline-none ring-wa-green-light focus:ring-2 transition"
+          placeholder="Type a message"
+        />
+        <!-- Voice note -->
+        <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-wa-green/10 transition" title="Record voice message">
+          <svg class="w-7 h-7 text-wa-green" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a2 2 0 0 0-2 2v7a2 2 0 0 0 4 0V4a2 2 0 0 0-2-2z"/>
+            <path d="M5 10a5 5 0 1 0 10 0"/>
+            <path d="M8 18h4"/>
+          </svg>
+        </button>
+        <!-- Send -->
+        <button type="submit" class="w-9 h-9 flex items-center justify-center rounded-full bg-wa-green hover:bg-wa-green-light transition text-white" title="Send">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="m21 3-19 9 7.5 3L17 21 21 3z"/>
+          </svg>
+        </button>
+      </form>
+    </section>
 
-      <!-- Right pane: Contacts & Profile (hide on small screens) -->
-      <aside class="hidden lg:flex lg:w-1/4 flex-col bg-white border-l border-emerald-200 min-w-[16rem] max-w-sm">
-        <div class="px-6 py-4 flex flex-col items-center border-b border-emerald-100">
-          <div class="relative">
-            <img src="https://placehold.co/80x80/21d19f/fff?text=JD" class="w-20 h-20 rounded-full border-4 border-emerald-300 shadow-lg" alt="">
-            <span class="absolute bottom-2 right-0 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full"></span>
-          </div>
-          <div class="mt-2 text-lg font-bold text-emerald-900">John Doe</div>
-          <span class="text-xs text-emerald-600">💬 Available</span>
-        </div>
-        <div class="flex-1 overflow-y-auto divide-y scrollbar-thin">
-          <div class="px-6 py-4">
-            <div class="text-sm font-semibold text-emerald-800 mb-3">Contacts</div>
-            <div class="flex flex-col gap-3">
-              <div class="flex items-center gap-3">
-                <img src="https://placehold.co/36x36/607d8b/fff?text=LM" class="w-9 h-9 rounded-full border border-emerald-200" alt="">
-                <span class="font-medium text-emerald-900">Lisa Martin</span>
-                <span class="ml-auto rounded-full w-2 h-2 bg-emerald-400"></span>
-              </div>
-              <div class="flex items-center gap-3">
-                <img src="https://placehold.co/36x36/fbc02d/fff?text=ME" class="w-9 h-9 rounded-full border border-emerald-200" alt="">
-                <span class="font-medium text-emerald-900">Mehul Engineer</span>
-                <span class="ml-auto rounded-full w-2 h-2 bg-emerald-300"></span>
-              </div>
-              <div class="flex items-center gap-3">
-                <img src="https://placehold.co/36x36/ff876c/fff?text=GS" class="w-9 h-9 rounded-full border border-emerald-200" alt="">
-                <span class="font-medium text-emerald-900">Family Group</span>
-                <span class="ml-auto rounded-full w-2 h-2 bg-emerald-400"></span>
-              </div>
-              <button class="w-full text-emerald-600 mt-5 text-left hover:underline flex items-center gap-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
-                  viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 4v16m8-8H4"/></svg> Add contact
-              </button>
-            </div>
-          </div>
-          <div class="px-6 py-4 border-t border-emerald-100">
-            <div class="flex items-center gap-2 cursor-pointer group">
-              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
-                viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 12a3 3 0 01-6 0"></path></svg>
-              <span class="text-emerald-700 group-hover:underline">Status privacy</span>
-            </div>
-            <div class="flex items-center gap-2 mt-3 cursor-pointer group">
-              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2"
-                viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round"
-                  d="M12 4v4m0 4v12m8-8H4"/></svg>
-              <span class="text-emerald-700 group-hover:underline">Settings</span>
-            </div>
-          </div>
-        </div>
-      </aside>
-    </div>
   </div>
 </body>
 </html>
