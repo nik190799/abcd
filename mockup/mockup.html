@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chat UI Mockup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+
+  <!-- Main Container -->
+  <div class="flex flex-col md:flex-row h-screen">
+
+    <!-- Sidebar: Profile & Contacts -->
+    <aside class="w-full md:w-1/4 bg-gray-800 flex flex-col border-r border-gray-700">
+
+      <!-- Profile Section -->
+      <div class="flex flex-col items-center py-8 px-4 bg-gray-900 border-b border-gray-700">
+        <img src="https://placehold.co/80x80/3b82f6/ffffff?text=JD" class="rounded-full mb-3 shadow-lg" alt="Profile Photo">
+        <div class="text-lg font-bold">Jane Doe</div>
+        <div class="text-sm mt-1 text-gray-400">🟢 Online</div>
+      </div>
+
+      <!-- Contacts List -->
+      <div class="flex-1 overflow-y-auto">
+        <h2 class="uppercase text-xs font-semibold text-gray-400 px-4 pt-4 pb-2">Contacts</h2>
+        <ul class="px-2 space-y-2 mb-4">
+          <li>
+            <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition">
+              <img src="https://placehold.co/36x36/6366f1/fff?text=AM" class="rounded-full mr-3" alt="Contact Photo">
+              <div>
+                <div class="font-medium">Alex Murphy</div>
+                <div class="text-xs text-gray-400">last seen 2m ago</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition">
+              <img src="https://placehold.co/36x36/10b981/fff?text=SB" class="rounded-full mr-3" alt="Contact Photo">
+              <div>
+                <div class="font-medium">Sara Black</div>
+                <div class="text-xs text-gray-400">active now</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition">
+              <img src="https://placehold.co/36x36/f59e42/fff?text=DW" class="rounded-full mr-3" alt="Contact Photo">
+              <div>
+                <div class="font-medium">Dan White</div>
+                <div class="text-xs text-gray-400">last seen 14m ago</div>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition">
+              <img src="https://placehold.co/36x36/ef4444/fff?text=MB" class="rounded-full mr-3" alt="Contact Photo">
+              <div>
+                <div class="font-medium">Maria Blue</div>
+                <div class="text-xs text-gray-400">offline</div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content: Chat List and Chat Window -->
+    <section class="flex-1 flex flex-col md:flex-row h-full">
+
+      <!-- Chat List (Recent Conversations) -->
+      <div class="w-full md:w-1/4 bg-gray-900 border-r border-gray-700 flex flex-col">
+        <div class="flex justify-between items-center p-4 border-b border-gray-700">
+          <span class="font-semibold">Chats</span>
+          <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 text-xs rounded-full font-semibold transition">+ New</button>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <ul class="divide-y divide-gray-800">
+            <li>
+              <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-800 transition">
+                <img src="https://placehold.co/40x40/3b82f6/fff?text=AM" alt="User" class="w-9 h-9 rounded-full mr-3">
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="font-medium">Alex Murphy</span>
+                    <span class="text-xs text-gray-400">12:30</span>
+                  </div>
+                  <div class="text-sm text-gray-400 truncate">Let’s catch up later today!</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-800 transition">
+                <img src="https://placehold.co/40x40/10b981/fff?text=SB" alt="User" class="w-9 h-9 rounded-full mr-3">
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="font-medium">Sara Black</span>
+                    <span class="text-xs text-gray-400">10:12</span>
+                  </div>
+                  <div class="text-sm text-gray-400 truncate">Sent the report 👍</div>
+                </div>
+                <span class="ml-2 bg-blue-600 text-xs px-2 rounded-full">2</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-800 transition">
+                <img src="https://placehold.co/40x40/f59e42/fff?text=DW" alt="User" class="w-9 h-9 rounded-full mr-3">
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="font-medium">Dan White</span>
+                    <span class="text-xs text-gray-400">09:49</span>
+                  </div>
+                  <div class="text-sm text-gray-400 truncate">See you at the meeting room.</div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-center px-4 py-3 hover:bg-gray-800 transition">
+                <img src="https://placehold.co/40x40/ef4444/fff?text=MB" alt="User" class="w-9 h-9 rounded-full mr-3">
+                <div class="flex-1">
+                  <div class="flex justify-between">
+                    <span class="font-medium">Maria Blue</span>
+                    <span class="text-xs text-gray-400">Yesterday</span>
+                  </div>
+                  <div class="text-sm text-gray-400 truncate">Okay, thanks for letting me know.</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Chat Window -->
+      <div class="flex-1 flex flex-col bg-gray-800">
+
+        <!-- Chat Header -->
+        <div class="flex items-center px-6 py-4 border-b border-gray-700">
+          <img src="https://placehold.co/40x40/10b981/fff?text=SB" alt="Chat With" class="w-10 h-10 rounded-full mr-4">
+          <div class="flex-1">
+            <div class="font-semibold">Sara Black</div>
+            <div class="text-xs text-gray-400">active now</div>
+          </div>
+          <button class="text-gray-400 hover:text-gray-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+          <!-- Date -->
+          <div class="flex justify-center">
+            <span class="px-3 py-1 bg-gray-700 text-xs rounded-full text-gray-300">Today</span>
+          </div>
+          <!-- Message (other) -->
+          <div class="flex items-end space-x-3">
+            <img src="https://placehold.co/32x32/10b981/fff?text=SB" class="rounded-full mb-2" alt="SB">
+            <div>
+              <div class="bg-gray-700 px-4 py-2 rounded-2xl rounded-bl-none text-sm max-w-xs">Hey Jane! How are you today? 😊</div>
+              <div class="text-xs text-gray-400 mt-1">10:09</div>
+            </div>
+          </div>
+          <!-- Reply (self) -->
+          <div class="flex items-end justify-end space-x-3">
+            <div>
+              <div class="bg-blue-600 px-4 py-2 rounded-2xl rounded-br-none text-sm max-w-xs text-white">Hi Sara! I'm doing great. How about you?</div>
+              <div class="text-xs text-gray-400 mt-1 text-right">10:11</div>
+            </div>
+            <img src="https://placehold.co/32x32/3b82f6/fff?text=JD" class="rounded-full mb-2" alt="Me">
+          </div>
+          <!-- Message (other) -->
+          <div class="flex items-end space-x-3">
+            <img src="https://placehold.co/32x32/10b981/fff?text=SB" class="rounded-full mb-2" alt="SB">
+            <div>
+              <div class="bg-gray-700 px-4 py-2 rounded-2xl rounded-bl-none text-sm max-w-xs">I'm doing well too! Did you finish the design draft?</div>
+              <div class="text-xs text-gray-400 mt-1">10:12</div>
+            </div>
+          </div>
+          <!-- Reply (self) -->
+          <div class="flex items-end justify-end space-x-3">
+            <div>
+              <div class="bg-blue-600 px-4 py-2 rounded-2xl rounded-br-none text-sm max-w-xs text-white">Yes, I'll send it over in a minute.</div>
+              <div class="text-xs text-gray-400 mt-1 text-right">10:12</div>
+            </div>
+            <img src="https://placehold.co/32x32/3b82f6/fff?text=JD" class="rounded-full mb-2" alt="Me">
+          </div>
+        </div>
+
+        <!-- Message Input -->
+        <form class="p-4 bg-gray-900 flex items-center gap-2 border-t border-gray-700">
+          <input type="text" placeholder="Type your message..." class="flex-1 p-3 text-gray-100 bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 border border-gray-700" />
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full px-6 py-2 font-semibold transition">Send</button>
+        </form>
+
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
